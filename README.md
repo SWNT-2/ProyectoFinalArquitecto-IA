@@ -17,7 +17,9 @@
 7. [Seguridad de Nivel de Fila (RLS) en Supabase](#-seguridad-de-nivel-de-fila-rls-en-supabase)
 8. [Desarrollo Frontend React & Modularidad](#-desarrollo-frontend-react--modularidad)
 9. [Flujo de Trabajo con Inteligencia Artificial (SDD)](#-flujo-de-trabajo-con-inteligencia-artificial-sdd)
-10. [Instrucciones de Instalación y Ejecución](#-instrucciones-de-instalación-y-ejecución)
+10. [Video Ilustrativo]
+(https://youtu.be/-D6SnwBi6pw?si=vlO3dW3e0hnv3kas)
+11. [Instrucciones de Instalación y Ejecución](#-instrucciones-de-instalación-y-ejecución)
 
 ---
 
@@ -218,6 +220,9 @@ Para la generación del código se utilizó el paradigma SDD con especificacione
 **Problema:** Durante la integración, las llamadas a Supabase fallaban cuando el `auth.uid()` de Supabase Auth no coincidía exactamente con el `id` de la tabla de instaladores de la aplicación.  
 **Solución con IA:** Mediante un prompt de **Refinamiento Iterativo**, se instruyó a la IA a no desactivar RLS ni delegar el filtro al frontend, sino construir una política SQL que emparejara la identidad utilizando los claims del token JWT (`auth.jwt() ->> 'email'`). Esto mantuvo la soberanía del código y la seguridad total en el backend.
 
+---
+## ▶️ Video Ilustrativo
+-  https://youtu.be/-D6SnwBi6pw?si=vlO3dW3e0hnv3kas
 ---
 
 ## 🛠️ Instrucciones de Instalación y Ejecución
