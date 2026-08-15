@@ -96,8 +96,8 @@ El sistema se sustenta en tres tablas relacionales bien estructuradas en Postgre
 
 ```mermaid
 erDiagram
-    INSTALADORES ||--o{ PROYECTOS : "supervisa / ejecuta"
-    PROYECTOS ||--o{ MATERIALES : "requiere / consume"
+    INSTALADORES ||--o{ PROYECTOS : supervisa
+    PROYECTOS ||--o{ MATERIALES : requiere
 
     INSTALADORES {
         uuid id PK
