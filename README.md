@@ -17,7 +17,7 @@
 7. [Seguridad de Nivel de Fila (RLS) en Supabase](#-seguridad-de-nivel-de-fila-rls-en-supabase)
 8. [Desarrollo Frontend React & Modularidad](#-desarrollo-frontend-react--modularidad)
 9. [Flujo de Trabajo con Inteligencia Artificial (SDD)](#-flujo-de-trabajo-con-inteligencia-artificial-sdd)
-10. [Video Ilustrativo](https://youtu.be/-D6SnwBi6pw?si=vlO3dW3e0hnv3kas) ▶️
+10. [Video Ilustrativo](https://youtu.be/-D6SnwBi6pw?si=vlO3dW3e0hnv3kas)
 11. [Instrucciones de Instalación y Ejecución](#-instrucciones-de-instalación-y-ejecución)
 
 ---
