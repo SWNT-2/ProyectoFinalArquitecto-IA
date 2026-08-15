@@ -11,12 +11,13 @@
 1. [Descripción General del Proyecto](#-descripción-general-del-proyecto)
 2. [Autoría y Créditos](#-autoría-y-créditos)
 3. [Cumplimiento de la Rúbrica de Evaluación](#-cumplimiento-de-la-rúbrica-de-evaluación)
-4. [Diagrama de Arquitectura General del Sistema](#-diagrama-de-arquitectura-general-del-sistema)
-5. [Modelo de Base de Datos & Diagrama ER](#-modelo-de-base-de-datos--diagrama-er)
-6. [Seguridad de Nivel de Fila (RLS) en Supabase](#-seguridad-de-nivel-de-fila-rls-en-supabase)
-7. [Desarrollo Frontend React & Modularidad](#-desarrollo-frontend-react--modularidad)
-8. [Flujo de Trabajo con Inteligencia Artificial (SDD)](#-flujo-de-trabajo-con-inteligencia-artificial-sdd)
-9. [Instrucciones de Instalación y Ejecución](#-instrucciones-de-instalación-y-ejecución)
+4. [Ingeniería de Prompts & Especificación SDD](#-ingeniería-de-prompts--especificación-sdd)
+5. [Diagrama de Arquitectura General del Sistema](#-diagrama-de-arquitectura-general-del-sistema)
+6. [Modelo de Base de Datos & Diagrama ER](#-modelo-de-base-de-datos--diagrama-er)
+7. [Seguridad de Nivel de Fila (RLS) en Supabase](#-seguridad-de-nivel-de-fila-rls-en-supabase)
+8. [Desarrollo Frontend React & Modularidad](#-desarrollo-frontend-react--modularidad)
+9. [Flujo de Trabajo con Inteligencia Artificial (SDD)](#-flujo-de-trabajo-con-inteligencia-artificial-sdd)
+10. [Instrucciones de Instalación y Ejecución](#-instrucciones-de-instalación-y-ejecución)
 
 ---
 
@@ -46,9 +47,41 @@ La plataforma fue diseñada aplicando el paradigma **Specification-Driven Develo
 
 ---
 
-## 🏗️ Diagrama de Arquitectura General del Sistema
+## 🤖 Ingeniería de Prompts & Especificación SDD
 
-El siguiente diagrama detalla la arquitectura de capas de EcoFlow, integrando la UI cliente en React, la capa de abstracción de datos con fallback/mock, la API cliente de Supabase y el motor PostgreSQL con RLS en el backend:
+En el modelo **Specification-Driven Development (SDD)**, los prompts actúan como contratos técnicos detallados. A continuación se presentan los prompts clave utilizados durante el ciclo de desarrollo:
+
+### 1. Prompt Maestro de Arquitectura y Base de Datos (Supabase SQL)
+```text
+[PROMPT 01 - ESQUEMA Y RLS SUPABASE]
+Rol: Arquitecto de Base de Datos Senior experto en PostgreSQL y Supabase.
+Objetivo: Diseñar el esquema DDL y la seguridad por diseño para la plataforma EcoFlow.
+
+RESTRICCIONES Y REQUISITOS:
+1. Crear tabla `instaladores` (id uuid PK, nombre, email unique, telefono, especialidad, estado).
+2. Crear tabla `proyectos` (id uuid PK, nombre, cliente_nombre, cliente_email, ubicacion, capacidad_kw numeric > 0, estado CHECK ('Pendiente', 'En Progreso', 'Completado'), instalador_id FK -> instaladores(id), presupuesto numeric >= 0, notas).
+3. Crear tabla `materiales` (id uuid PK, nombre, categoria CHECK ('Panel', 'Inversor', 'Estructura', 'Cableado', 'Batería'), stock int >= 0, unidad, precio_unitario, proyecto_id FK).
+4. Habilitar RLS en las 3 tablas y escribir una política SELECT en `proyectos` para que instalador_id coincida con auth.uid() o auth.jwt() ->> 'email'.
+5. Proporcionar datos semilla (seed data) reales de prueba.
+```
+
+### 2. Prompt de Componentes Atómicos React (Frontend TypeScript)
+```text
+[PROMPT 02 - FRONTEND REACT MODULAR]
+Rol: Desarrollador Frontend Senior experto en React 19, TypeScript y Tailwind CSS.
+Objetivo: Implementar el Dashboard de Proyectos Solares de EcoFlow.
+
+RESTRICCIONES Y REQUISITOS:
+1. Crear componentes pequeños e independientes: MetricsCards, ProjectList, ProjectModal e InstallersAndInventory.
+2. Tipar íntegramente todas las interfaces en `types/database.ts` (sin utilizar 'any').
+3. Implementar un estado reactivo con custom hooks para cambiar el estado de proyectos (Pendiente, En Progreso, Completado) y realizar búsquedas filtradas por texto.
+4. Crear un formulario modal con validaciones del lado del cliente (correo válido, kWp > 0, presupuesto > 0) que muestre notificaciones Toast de éxito y manejo de errores.
+5. Aplicar un diseño moderno oscuro con colores Slate-950, acentos Amber-400 para energía solar y Emerald-400 para proyectos completados.
+```
+
+---
+
+## 🏗️ Diagrama de Arquitectura General del Sistema
 
 ```mermaid
 graph TD
@@ -91,8 +124,6 @@ graph TD
 ---
 
 ## 📐 Modelo de Base de Datos & Diagrama ER
-
-El sistema se sustenta en tres tablas relacionales bien estructuradas en PostgreSQL Supabase:
 
 ```mermaid
 erDiagram
@@ -181,21 +212,7 @@ El frontend se desarrolló en React con TypeScript siguiendo una arquitectura de
 ## 🤖 Flujo de Trabajo con Inteligencia Artificial (SDD)
 
 ### 1. Specification-Driven Development (Prompt Maestro)
-Para la generación del código se utilizó el siguiente **Prompt Maestro estructurado**:
-
-```text
-[PROMPT MAESTRO SDD - PLATAFORMA ECOFLOW]
-Rol: Arquitecto de Software Principal experto en React, TypeScript, Tailwind CSS y Supabase PostgreSQL.
-
-CONTEXTO Y OBJETIVO:
-Diseñar e implementar la plataforma web "EcoFlow" para la gestión de instalaciones fotovoltaicas. 
-Debe permitir monitorear KPIs, filtrar proyectos por estado, asignar instaladores y registrar nuevas obras con validación estricta.
-
-RESTRICCIONES TÉCNICAS:
-1. Base de Datos: Tablas proyectos, instaladores y materiales con claves foráneas y RLS habilitado en Supabase.
-2. Frontend: Componentes atómicos React, Hooks tipados, manejo de estado reactivo y cero errores de TypeScript.
-3. UX/Diseño: Estilo oscuro Slate-950 con acentos Amber (solar) y Emerald (completado).
-```
+Para la generación del código se utilizó el paradigma SDD con especificaciones claras para evitar el "copiar y pegar ciego".
 
 ### 2. Resolución de Retos Técnicos Complejos con IA
 **Problema:** Durante la integración, las llamadas a Supabase fallaban cuando el `auth.uid()` de Supabase Auth no coincidía exactamente con el `id` de la tabla de instaladores de la aplicación.  
