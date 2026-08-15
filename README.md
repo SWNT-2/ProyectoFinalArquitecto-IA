@@ -17,8 +17,7 @@
 7. [Seguridad de Nivel de Fila (RLS) en Supabase](#-seguridad-de-nivel-de-fila-rls-en-supabase)
 8. [Desarrollo Frontend React & Modularidad](#-desarrollo-frontend-react--modularidad)
 9. [Flujo de Trabajo con Inteligencia Artificial (SDD)](#-flujo-de-trabajo-con-inteligencia-artificial-sdd)
-10. [Video Ilustrativo]
-(https://youtu.be/-D6SnwBi6pw?si=vlO3dW3e0hnv3kas)
+10. [Video Ilustrativo](https://youtu.be/-D6SnwBi6pw?si=vlO3dW3e0hnv3kas) ▶️
 11. [Instrucciones de Instalación y Ejecución](#-instrucciones-de-instalación-y-ejecución)
 
 ---
@@ -86,7 +85,7 @@ RESTRICCIONES Y REQUISITOS:
 ## 🏗️ Diagrama de Arquitectura General del Sistema
 
 ```mermaid
-graph TD
+flowchart TD
     subgraph Client ["Frontend App (React + TypeScript + Tailwind)"]
         UI["UI Componentes (React 19)"]
         State["Manejador de Estado & Hooks (useState, useEffect)"]
@@ -101,13 +100,10 @@ graph TD
 
     subgraph BackendSupabase ["Backend Supabase (Cloud PostgreSQL)"]
         AuthService["Supabase Auth (JWT Tokens)"]
-        
-        subgraph DatabaseEngine ["Engine Database PostgreSQL"]
-            RLSPolicy["Mecanismo Row Level Security (RLS)"]
-            TableProyectos["Tabla: proyectos (PK uuid, FK instalador_id)"]
-            TableInstaladores["Tabla: instaladores (PK uuid, UK email)"]
-            TableMateriales["Tabla: materiales (PK uuid, FK proyecto_id)"]
-        end
+        RLSPolicy["Mecanismo Row Level Security (RLS)"]
+        TableProyectos["Tabla: proyectos (PK uuid, FK instalador_id)"]
+        TableInstaladores["Tabla: instaladores (PK uuid, UK email)"]
+        TableMateriales["Tabla: materiales (PK uuid, FK proyecto_id)"]
     end
 
     UI --> State
@@ -119,8 +115,8 @@ graph TD
     RLSPolicy --> TableProyectos
     RLSPolicy --> TableInstaladores
     RLSPolicy --> TableMateriales
-    TableInstaladores -. "1:N Relationship" .-> TableProyectos
-    TableProyectos -. "1:N Relationship" .-> TableMateriales
+    TableInstaladores -.->|Relación 1:N| TableProyectos
+    TableProyectos -.->|Relación 1:N| TableMateriales
 ```
 
 ---
@@ -222,7 +218,13 @@ Para la generación del código se utilizó el paradigma SDD con especificacione
 
 ---
 ## ▶️ Video Ilustrativo
--  https://youtu.be/-D6SnwBi6pw?si=vlO3dW3e0hnv3kas
+
+<p align="center">
+  <img src="docs/logo.png" alt="EcoFlow Logo Banner" width="700" />
+</p>
+
+- 🎬 **Video Explicativo en YouTube:** https://youtu.be/-D6SnwBi6pw?si=vlO3dW3e0hnv3kas
+
 ---
 
 ## 🛠️ Instrucciones de Instalación y Ejecución
